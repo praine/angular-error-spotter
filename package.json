@@ -2,7 +2,7 @@
   "name": "angular-error-spotter",
   "version": "0.0.1",
   "scripts": {
-    "start": "npm run prebuild && node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server --https"
+    "start": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server --https"
   },
   "dependencies": {
     "@angular/animations": "5.1.2",

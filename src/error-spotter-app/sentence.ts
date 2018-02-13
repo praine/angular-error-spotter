@@ -1,4 +1,4 @@
-import { Word } from "../../model/types/word";
+import { Word } from "./word";
 
 export class Sentence {
     sentenceID: number;

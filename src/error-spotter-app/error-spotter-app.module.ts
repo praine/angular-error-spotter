@@ -1,14 +1,12 @@
 import { NgModule } from "@angular/core";
-import { CoreModule } from "../../core/core.module";
-import { SharedActivityModule } from "../shared-activity/shared-activity.module";
 import { ErrorSpotterAppComponent } from "./error-spotter-app.component";
 import { ErrorSpotterStateService } from "./error-spotter-state.service";
 import { ErrorSpotterProgressService } from "./error-spotter-progress.service";
+import { BrowserModule } from "@angular/platform-browser";
 
 @NgModule({
     imports: [
-        CoreModule,
-        SharedActivityModule
+        BrowserModule
     ],
     providers: [
         ErrorSpotterStateService,

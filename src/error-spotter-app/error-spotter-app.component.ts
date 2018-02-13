@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { IdentityService } from "../../core/identity.service";
 import { ErrorSpotterStateService } from "./error-spotter-state.service";
 import { ErrorSpotterProgressService } from "./error-spotter-progress.service";
 
@@ -11,13 +10,8 @@ export class ErrorSpotterAppComponent {
 
     constructor(
         private errorSpotterState: ErrorSpotterStateService,
-        private errorSpotterProgressService: ErrorSpotterProgressService,
-        private identityService: IdentityService) {
+        private errorSpotterProgressService: ErrorSpotterProgressService) {
 
-    }
-
-    isAnonymous(): boolean {
-        return this.identityService.isAnonymous();
     }
 
 }
