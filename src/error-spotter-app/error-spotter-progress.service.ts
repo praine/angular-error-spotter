@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import { Injectable } from "@angular/core";
 import { StopWatch } from "./stopwatch";
+import { SentenceDisplayWord } from "./sentence";
 
 
 @Injectable()
@@ -39,8 +40,15 @@ export class ErrorSpotterProgressService {
         this.sendCompletionEvent();
     }
 
-    answer(): void {
-        
+    answer(correct: boolean, sentenceWord: SentenceDisplayWord): void {
+        let event = {
+            correct: correct,
+            selectedWord: {
+                wordHeadID: sentenceWord.word.wordHeadID, // undefined for space, need to define how we should store incprrect space events
+                wordRootID: sentenceWord.word.wordHeadID,
+                sequence: sentenceWord.sequence
+            }
+        }
     }
 
     sendStartEvent(): void {

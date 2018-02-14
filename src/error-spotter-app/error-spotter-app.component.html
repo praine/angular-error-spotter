@@ -1,8 +1,41 @@
-<div class="card" style="width: 18rem;">
-    
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="container-fluid error-spotter">
+
+    <div *ngIf="!isStarted()" class="start-screen">
+        <div class="btn btn-success" (click)="startQuiz()" i18n>Start</div>
     </div>
+
+    <div *ngIf="isStarted() && !isCompleted()">
+        <div class="sentence-wrapper mt-5 d-flex justify-content-center">
+            <div *ngIf="getCurrentSentence()">
+                <span *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
+                      class="display-word"
+                      [class.selected]="!isChecked() && isSelected(i)"
+                      [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor && isErrorTypeDeletion())"
+                      [class.correct]="isChecked() && displayWord.replaced"
+                      [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
+                      [class.distractor]="isChecked() && displayWord.distractor"
+                      (click)="selectDisplayWord(i)"
+                >{{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}</span>
+            </div>
+        </div>
+
+        <div *ngIf="isChecked()" class="feedback-message">
+            <div *ngIf="isCorrect()" class="alert alert-success" i18n>Correct</div>
+            <div *ngIf="!isCorrect()" class="alert alert-danger" i18n>Incorrect</div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div *ngIf="!isChecked()"
+                 (click)="checkAnswer()"
+                 class="btn btn-success">Check</div>
+            <div *ngIf="isChecked()"
+                 (click)="nextQuestion()"
+                 class="btn btn-success">Next</div>
+        </div>
+    </div>
+
+    <div *ngIf="isCompleted()" class="completion-screen">
+        Complete!
+    </div>
+
 </div>
