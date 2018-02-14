@@ -1,0 +1,7 @@
+.selected {
+    outline: 1px #000 solid;
+}
+
+.display-word {
+    padding: 0 0.2em;
+}

@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { Component } from "@angular/core";
 import { ErrorSpotterStateService } from "./error-spotter-state.service";
 import { ErrorSpotterProgressService } from "./error-spotter-progress.service";
@@ -11,6 +12,8 @@ import { SentenceDisplay } from "./sentence";
     styleUrls: ["error-spotter-app.component.css"]
 })
 export class ErrorSpotterAppComponent {
+    private selectedIndex?: number;
+    private checked: boolean = false;
 
     constructor(
         private errorSpotterStateService: ErrorSpotterStateService,
@@ -20,6 +23,11 @@ export class ErrorSpotterAppComponent {
 
     initialize(): void {
         this.errorSpotterStateService.setSentences(TEST_SENTENCES);
+    }
+
+    reset(): void {
+        this.checked = false;
+        this.selectedIndex = undefined;
     }
 
     isStarted(): boolean {
@@ -38,4 +46,34 @@ export class ErrorSpotterAppComponent {
         return this.errorSpotterStateService.getCurrentSentenceDisplay();
     }
 
+    selectDisplayWord(index: number): void {
+        this.selectedIndex = index;
+    }
+
+    hasSelected(): boolean {
+        return !_.isUndefined(this.selectedIndex);
+    }
+
+    isSelected(index: number): boolean {
+        return this.selectedIndex === index;
+    }
+
+    checkAnswer(): void {
+        if (!this.hasSelected()) {
+            return;
+        }
+        this.checked = true;
+    }
+
+    isChecked(): boolean {
+        return this.checked;
+    }
+
+    nextQuestion(): void {
+        if (!this.isChecked()) {
+            return;
+        }
+        this.reset();
+        this.errorSpotterStateService.generateNextSentence();
+    }
 }

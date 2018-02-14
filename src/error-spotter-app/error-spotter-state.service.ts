@@ -30,12 +30,6 @@ export class ErrorSpotterStateService {
         return this.currentSentenceDisplay;
     }
 
-    onAnswer(sentenceId: number) {
-        if (this.currentSentenceDisplay.sentenceID == sentenceId) {
-            this.generateNextSentence();
-        }
-    }
-
     generateNextSentence(): SentenceDisplay {
         if (_.isEmpty(this.sentences)) {
             this.completed = true;
@@ -51,7 +45,7 @@ export class ErrorSpotterStateService {
         return this.currentSentenceDisplay;
     }
 
-    generateSentenceDisplay(sentence: Sentence): SentenceDisplay {
+    private generateSentenceDisplay(sentence: Sentence): SentenceDisplay {
         let sentenceDisplay = {
             sentenceID: sentence.sentenceID,
             displayWords: []
@@ -95,7 +89,7 @@ export class ErrorSpotterStateService {
                 return "";
             }
 
-            // add space
+            // add space after
             if (this.currentDistractor.errorType === ERROR_TYPE_SUBSTITUTION) {
                 sentenceDisplay.displayWords.push({
                     prefix: "",
