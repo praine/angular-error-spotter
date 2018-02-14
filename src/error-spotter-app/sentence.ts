@@ -19,14 +19,15 @@ export const ERROR_TYPE_DELETION = "deletion";
 
 export class SentenceDisplay {
     sentenceID: number;
-    displayWords: SentenceDisplayWords[];
+    displayWords: SentenceDisplayWord[];
 }
 
-export class SentenceDisplayWords {
+export class SentenceDisplayWord {
     prefix: string;
     text: string;
     postfix: string;
     visible: boolean;
+    replaced: boolean;
     distractor: boolean;
     sequence: number;
     word?: Word;

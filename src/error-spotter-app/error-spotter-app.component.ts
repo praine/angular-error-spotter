@@ -14,6 +14,7 @@ import { SentenceDisplay } from "./sentence";
 export class ErrorSpotterAppComponent {
     private selectedIndex?: number;
     private checked: boolean = false;
+    private correct: boolean = false;
 
     constructor(
         private errorSpotterStateService: ErrorSpotterStateService,
@@ -46,7 +47,18 @@ export class ErrorSpotterAppComponent {
         return this.errorSpotterStateService.getCurrentSentenceDisplay();
     }
 
+    isErrorTypeDeletion(): boolean {
+        return this.errorSpotterStateService.isErrorTypeDeletion();
+    }
+
+    isErrorTypeSubstitution(): boolean {
+        return this.errorSpotterStateService.isErrorTypeSubstitution();
+    }
+
     selectDisplayWord(index: number): void {
+        if (this.isChecked()) {
+            return;
+        }
         this.selectedIndex = index;
     }
 
@@ -62,11 +74,20 @@ export class ErrorSpotterAppComponent {
         if (!this.hasSelected()) {
             return;
         }
+
         this.checked = true;
+
+        let selectedWord = this.errorSpotterStateService.getDisplayWordByIndex(this.selectedIndex);
+        this.correct = selectedWord.distractor === true;
+        this.errorSpotterProgressService.answer(this.correct, selectedWord);
     }
 
     isChecked(): boolean {
         return this.checked;
+    }
+
+    isCorrect(): boolean {
+        return this.correct;
     }
 
     nextQuestion(): void {

@@ -1,20 +1,29 @@
-<div class="container-fluid">
+<div class="container-fluid error-spotter">
 
-    <div *ngIf="!isStarted()">
+    <div *ngIf="!isStarted()" class="start-screen">
         <div class="btn btn-success" (click)="startQuiz()" i18n>Start</div>
     </div>
 
     <div *ngIf="isStarted() && !isCompleted()">
-        <div class="d-flex justify-content-center">
+        <div class="sentence-wrapper mt-5 d-flex justify-content-center">
             <div *ngIf="getCurrentSentence()">
                 <span *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
                       class="display-word"
-                      [class.d-none]="!displayWord.visible"
-                      [class.selected]="isSelected(i)"
+                      [class.selected]="!isChecked() && isSelected(i)"
+                      [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor && isErrorTypeDeletion())"
+                      [class.correct]="isChecked() && displayWord.replaced"
+                      [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
+                      [class.distractor]="isChecked() && displayWord.distractor"
                       (click)="selectDisplayWord(i)"
                 >{{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}</span>
             </div>
         </div>
+
+        <div *ngIf="isChecked()" class="feedback-message">
+            <div *ngIf="isCorrect()" class="alert alert-success" i18n>Correct</div>
+            <div *ngIf="!isCorrect()" class="alert alert-danger" i18n>Incorrect</div>
+        </div>
+
         <div class="d-flex justify-content-center">
             <div *ngIf="!isChecked()"
                  (click)="checkAnswer()"
@@ -25,7 +34,7 @@
         </div>
     </div>
 
-    <div *ngIf="isCompleted()">
+    <div *ngIf="isCompleted()" class="completion-screen">
         Complete!
     </div>
 

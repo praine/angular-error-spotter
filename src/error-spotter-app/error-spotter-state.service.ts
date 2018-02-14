@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { Injectable } from "@angular/core";
 import {
-    ERROR_TYPE_DELETION, ERROR_TYPE_SUBSTITUTION, Sentence, SentenceDisplay,
+    ERROR_TYPE_DELETION, ERROR_TYPE_SUBSTITUTION, Sentence, SentenceDisplay, SentenceDisplayWord,
     SentenceDistractor
 } from "./sentence";
 import { Word } from "./word";
@@ -30,6 +30,13 @@ export class ErrorSpotterStateService {
         return this.currentSentenceDisplay;
     }
 
+    getDisplayWordByIndex(index: number): SentenceDisplayWord | undefined {
+        if (!this.currentSentenceDisplay || _.isEmpty(this.currentSentenceDisplay.displayWords)) {
+            return undefined;
+        }
+        return this.currentSentenceDisplay.displayWords[index];
+    }
+
     generateNextSentence(): SentenceDisplay {
         if (_.isEmpty(this.sentences)) {
             this.completed = true;
@@ -43,6 +50,14 @@ export class ErrorSpotterStateService {
         this.sentences = _.tail(this.sentences);
 
         return this.currentSentenceDisplay;
+    }
+
+    isErrorTypeSubstitution(): boolean {
+        return this.currentDistractor.errorType === ERROR_TYPE_SUBSTITUTION;
+    }
+
+    isErrorTypeDeletion(): boolean {
+        return this.currentDistractor.errorType === ERROR_TYPE_DELETION;
     }
 
     private generateSentenceDisplay(sentence: Sentence): SentenceDisplay {
@@ -69,6 +84,7 @@ export class ErrorSpotterStateService {
                     text: this.currentDistractor.transcript || " ",
                     postfix: postfix,
                     visible: true,
+                    replaced: false,
                     distractor: true,
                     sequence: word.sequence,
                     word: this.currentDistractor.word
@@ -80,6 +96,7 @@ export class ErrorSpotterStateService {
                 text: text,
                 postfix: postfix,
                 visible: word.sequence !== this.currentDistractor.sequence,
+                replaced: word.sequence == this.currentDistractor.sequence,
                 distractor: false,
                 sequence: word.sequence,
                 word: word
@@ -90,23 +107,26 @@ export class ErrorSpotterStateService {
             }
 
             // add space after
-            if (this.currentDistractor.errorType === ERROR_TYPE_SUBSTITUTION) {
+            if (this.isErrorTypeSubstitution()) {
                 sentenceDisplay.displayWords.push({
                     prefix: "",
                     text: " ",
                     postfix: "",
                     visible: true,
+                    replaced: false,
                     distractor: false,
                     sequence: word.sequence
                 });
             }
 
-            if (this.currentDistractor.errorType === ERROR_TYPE_DELETION) {
+            if (this.isErrorTypeDeletion()) {
+                let visible = word.sequence !== this.currentDistractor.sequence && word.sequence !== this.currentDistractor.sequence - 1;
                 sentenceDisplay.displayWords.push({
                     prefix: "",
                     text: " ",
                     postfix: "",
-                    visible: word.sequence !== this.currentDistractor.sequence && word.sequence !== this.currentDistractor.sequence - 1,
+                    visible: visible,
+                    replaced: !visible,
                     distractor: false,
                     sequence: word.sequence
                 });
