@@ -37,10 +37,10 @@ export class ErrorSpotterStateService {
         return this.currentSentenceDisplay.displayWords[index];
     }
 
-    generateNextSentence(): SentenceDisplay {
+    generateNextSentence(): SentenceDisplay | undefined {
         if (_.isEmpty(this.sentences)) {
             this.completed = true;
-            return;
+            return undefined;
         }
 
         let currentSentence = _.head(this.sentences);

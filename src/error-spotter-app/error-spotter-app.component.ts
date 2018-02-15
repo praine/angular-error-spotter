@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 import { ErrorSpotterStateService } from "./error-spotter-state.service";
 import { ErrorSpotterProgressService } from "./error-spotter-progress.service";
 import { TEST_SENTENCES } from "../test-data/test-sentences";
-import { SentenceDisplay } from "./sentence";
+import { ErrorSpotterAnswer, SentenceDisplay } from "./sentence";
 
 
 @Component({
@@ -41,6 +41,7 @@ export class ErrorSpotterAppComponent {
 
     startQuiz(): void {
         this.errorSpotterStateService.startQuiz();
+        this.errorSpotterProgressService.startSession();
     }
 
     getCurrentSentence(): SentenceDisplay | undefined {
@@ -83,7 +84,12 @@ export class ErrorSpotterAppComponent {
 
         let selectedWord = this.errorSpotterStateService.getDisplayWordByIndex(this.selectedIndex);
         this.correct = selectedWord.distractor === true;
-        this.errorSpotterProgressService.answer(this.correct, selectedWord);
+        this.errorSpotterProgressService.answer(
+            this.getCurrentSentence(),
+            selectedWord,
+            this.selectedIndex,
+            this.correct
+        );
     }
 
     isChecked(): boolean {
@@ -99,6 +105,21 @@ export class ErrorSpotterAppComponent {
             return;
         }
         this.reset();
-        this.errorSpotterStateService.generateNextSentence();
+        let nextSentence = this.errorSpotterStateService.generateNextSentence();
+        if (!nextSentence) {
+            this.errorSpotterProgressService.endSession();
+        }
+    }
+
+    getSessionTime(): string {
+        return this.errorSpotterProgressService.getSessionTime();
+    }
+
+    getAnswers(): ErrorSpotterAnswer[] {
+        return this.errorSpotterProgressService.getAnswers();
+    }
+
+    getTotalCorrectAnswers(): number {
+        return this.errorSpotterProgressService.getTotalCorrectAnswers();
     }
 }
