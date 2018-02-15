@@ -79,9 +79,10 @@ export class ErrorSpotterStateService {
                 : _.slice(transcript, wordEndIndex).join("");
 
             if (word.sequence === this.currentDistractor.sequence) {
+                let distractorText = this.currentDistractor.transcript || "";
                 sentenceDisplay.displayWords.push({
                     prefix: prefix,
-                    text: this.currentDistractor.transcript || " ",
+                    text: distractorText,
                     postfix: postfix,
                     visible: true,
                     replaced: false,
@@ -95,7 +96,7 @@ export class ErrorSpotterStateService {
                     postfix: postfix,
                     visible: false,
                     replaced: true,
-                    replacedBy: this.currentDistractor.transcript || "",
+                    replacedBy: distractorText,
                     distractor: false,
                     sequence: word.sequence,
                     word: word
