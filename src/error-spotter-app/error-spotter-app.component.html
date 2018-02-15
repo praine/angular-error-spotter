@@ -25,7 +25,6 @@
                         [currentSentence]="getCurrentSentence()"
                         [selectedIndex]="getSelectedIndex()"
                         [checked]="isChecked()"
-                        [deletion]="isErrorTypeDeletion()"
                         (onWordSelect)="selectDisplayWord($event)"
                     ></ec-error-spotter-sentence>
                 </div>
@@ -55,6 +54,27 @@
         <div>
             <span class="fa fa-clock-o"></span>{{getSessionTime()}}
         </div>
+
+        <div class="row" *ngFor="let answer of getAnswers(); let i = index;">
+            <div class="col-1">
+                {{ i + 1 }}
+            </div>
+
+            <div class="col-10">
+                <ec-error-spotter-sentence
+                        [currentSentence]="answer.sentence"
+                        [selectedIndex]="answer.selectedIndex"
+                        [checked]="true"
+                ></ec-error-spotter-sentence>
+            </div>
+
+            <div class="col-1">
+                <span *ngIf="answer.correct" class="fa "></span>
+                <span *ngIf="!answer.correct"></span>
+            </div>
+        </div>
+
+
     </div>
 
 </div>

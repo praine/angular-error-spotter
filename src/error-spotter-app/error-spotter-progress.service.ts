@@ -16,7 +16,7 @@ export class ErrorSpotterProgressService {
     private activity: any;
     private answers: ErrorSpotterAnswer[] = [];
     private sessionTime: string;
-    private subscriptions: Subscription[] = []
+    private subscriptions: Subscription[] = [];
 
     constructor() {
     }
@@ -60,6 +60,12 @@ export class ErrorSpotterProgressService {
         return this.sessionTime;
     }
 
+    startQuestion(): void {
+        this.answerStopWatch.reset();
+        this.answerStopWatch.start();
+        this.sendQuestionStartEvent();
+    }
+
     answer(sentence: SentenceDisplay, sentenceWord: SentenceDisplayWord, selectedIndex: number, correct: boolean): void {
         this.sendAnswerEvent(sentenceWord, selectedIndex, correct);
         this.answers.push({
@@ -89,14 +95,22 @@ export class ErrorSpotterProgressService {
         }
     }
 
+    sendQuestionStartEvent(): void {
+
+    }
+
     sendAnswerEvent(sentenceWord: SentenceDisplayWord, selectedIndex: number, correct: boolean): void {
+        this.answerStopWatch.stop();
+
         let event = {
             correct: correct,
+            selectedIndex: selectedIndex,
             selectedWord: {
                 wordHeadID: sentenceWord.word ? sentenceWord.word.wordHeadID : undefined, // undefined for space, need to define how we should store incprrect space events
                 wordRootID: sentenceWord.word ? sentenceWord.word.wordHeadID : undefined,
                 sequence: sentenceWord.sequence
-            }
+            },
+            timeOnTask: this.answerStopWatch.getTime()
         }
     }
 }

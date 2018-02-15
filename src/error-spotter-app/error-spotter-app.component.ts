@@ -48,14 +48,6 @@ export class ErrorSpotterAppComponent {
         return this.errorSpotterStateService.getCurrentSentenceDisplay();
     }
 
-    isErrorTypeDeletion(): boolean {
-        return this.errorSpotterStateService.isErrorTypeDeletion();
-    }
-
-    isErrorTypeSubstitution(): boolean {
-        return this.errorSpotterStateService.isErrorTypeSubstitution();
-    }
-
     selectDisplayWord(index: number): void {
         if (this.isChecked()) {
             return;
@@ -69,10 +61,6 @@ export class ErrorSpotterAppComponent {
 
     hasSelected(): boolean {
         return !_.isUndefined(this.selectedIndex);
-    }
-
-    isSelected(index: number): boolean {
-        return this.selectedIndex === index;
     }
 
     checkAnswer(): void {

@@ -87,6 +87,7 @@ export class ErrorSpotterStateService {
                     replaced: false,
                     distractor: true,
                     sequence: word.sequence,
+                    distractorDeletion: this.isErrorTypeDeletion(),
                     word: this.currentDistractor.word
                 });
             }

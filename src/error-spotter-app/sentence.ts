@@ -29,6 +29,7 @@ export class SentenceDisplayWord {
     visible: boolean;
     replaced: boolean;
     distractor: boolean;
+    distractorDeletion?: boolean;
     sequence: number;
     word?: Word;
 }
