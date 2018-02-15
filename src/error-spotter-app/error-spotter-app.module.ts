@@ -3,6 +3,7 @@ import { ErrorSpotterAppComponent } from "./error-spotter-app.component";
 import { ErrorSpotterStateService } from "./error-spotter-state.service";
 import { ErrorSpotterProgressService } from "./error-spotter-progress.service";
 import { BrowserModule } from "@angular/platform-browser";
+import { ErrorSpotterSentenceComponent } from "./error-spotter-sentence.component";
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { BrowserModule } from "@angular/platform-browser";
         ErrorSpotterProgressService
     ],
     declarations: [
-        ErrorSpotterAppComponent
+        ErrorSpotterAppComponent,
+        ErrorSpotterSentenceComponent
     ],
     bootstrap: [
         ErrorSpotterAppComponent

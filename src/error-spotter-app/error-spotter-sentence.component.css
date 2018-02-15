@@ -1,0 +1,27 @@
+.selected {
+    outline: 1px #000 solid;
+}
+
+.display-word {
+    padding: 0 0.2em;
+}
+
+.sentence-wrapper {
+    min-height: 20vh;
+}
+
+.correct {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.incorrect {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.distractor {
+    color: #f00;
+    text-decoration: line-through;
+    font-size: 0.9em;
+}
