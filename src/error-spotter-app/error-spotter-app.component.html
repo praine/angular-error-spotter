@@ -12,15 +12,11 @@
     </div>
 
     <div *ngIf="isStarted() && !isCompleted()">
-
-    	<div>
-            <span class="fa fa-clock-o"></span>{{getSessionTime()}}
-        </div>
     
         <div class="card">
             <div class="card-body">
 
-                <div class="sentence-wrapper mt-5">
+                <div class="sentence-wrapper">
                     <ec-error-spotter-sentence
                         [currentSentence]="getCurrentSentence()"
                         [selectedIndex]="getSelectedIndex()"
@@ -30,17 +26,18 @@
                 </div>
 
                 <div *ngIf="isChecked()" class="feedback-message">
-                    <div *ngIf="isCorrect()" class="alert alert-success" i18n>Correct</div>
-                    <div *ngIf="!isCorrect()" class="alert alert-danger" i18n>Incorrect</div>
+                    <div *ngIf="isCorrect()" class="alert alert-success" i18n><img class="fb-img" src='assets/check-mark.png'> Correct</div>
+                    <div *ngIf="!isCorrect()" class="alert alert-danger" i18n><img class="fb-img" src='assets/cross-mark.png'> Incorrect</div>
                 </div>
 
                 <div class="d-flex justify-content-center">
                     <div *ngIf="!isChecked()"
+                        [class.disabled]="!hasSelected()"
                         (click)="checkAnswer()"
-                        class="btn btn-success">Check</div>
+                        class="btn btn-primary btn-block">Check <i class="fa fa-check"></i></div>
                     <div *ngIf="isChecked()"
                         (click)="nextQuestion()"
-                        class="btn btn-success">Next</div>
+                        class="btn btn-success btn-block">Next <i class="fa fa-arrow-right"></i></div>
                 </div>
 
             </div>
