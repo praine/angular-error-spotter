@@ -1,32 +1,45 @@
 <div class="container-fluid error-spotter">
 
     <div *ngIf="!isStarted()" class="start-screen">
-        <div class="btn btn-success" (click)="startQuiz()" i18n>Start</div>
+        <div class="card">
+            <img class="card-img-top logo mx-auto" src="assets/logo.png" alt="Error Spotter">
+            <div class="card-body">
+                <h5 class="card-title text-center">Error Spotter</h5>
+                <p class="card-text text-center">Improve your recognition of common English mistakes.</p>
+                <div class="btn btn-success btn-block" (click)="startQuiz()" i18n><i class="fa fa-play"></i> Start Quiz</div>
+            </div>
+        </div>
     </div>
 
     <div *ngIf="isStarted() && !isCompleted()">
-        <div class="sentence-wrapper mt-5">
-            <ec-error-spotter-sentence
-                [currentSentence]="getCurrentSentence()"
-                [selectedIndex]="getSelectedIndex()"
-                [checked]="isChecked()"
-                [deletion]="isErrorTypeDeletion()"
-                (onWordSelect)="selectDisplayWord($event)"
-            ></ec-error-spotter-sentence>
-        </div>
+        <div class="card">
+            <div class="card-body">
 
-        <div *ngIf="isChecked()" class="feedback-message">
-            <div *ngIf="isCorrect()" class="alert alert-success" i18n>Correct</div>
-            <div *ngIf="!isCorrect()" class="alert alert-danger" i18n>Incorrect</div>
-        </div>
+                <div class="sentence-wrapper mt-5">
+                    <ec-error-spotter-sentence
+                        [currentSentence]="getCurrentSentence()"
+                        [selectedIndex]="getSelectedIndex()"
+                        [checked]="isChecked()"
+                        [deletion]="isErrorTypeDeletion()"
+                        (onWordSelect)="selectDisplayWord($event)"
+                    ></ec-error-spotter-sentence>
+                </div>
 
-        <div class="d-flex justify-content-center">
-            <div *ngIf="!isChecked()"
-                 (click)="checkAnswer()"
-                 class="btn btn-success">Check</div>
-            <div *ngIf="isChecked()"
-                 (click)="nextQuestion()"
-                 class="btn btn-success">Next</div>
+                <div *ngIf="isChecked()" class="feedback-message">
+                    <div *ngIf="isCorrect()" class="alert alert-success" i18n>Correct</div>
+                    <div *ngIf="!isCorrect()" class="alert alert-danger" i18n>Incorrect</div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div *ngIf="!isChecked()"
+                        (click)="checkAnswer()"
+                        class="btn btn-success">Check</div>
+                    <div *ngIf="isChecked()"
+                        (click)="nextQuestion()"
+                        class="btn btn-success">Next</div>
+                </div>
+
+            </div>
         </div>
     </div>
 

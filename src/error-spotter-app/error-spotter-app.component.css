@@ -1,7 +1,19 @@
 .error-spotter {
-    font-size: 6vh;
+    /*font-size: 6vh;*/
+    margin-top:20px;
+    width:100%;
 }
 
 .feedback-message {
     font-size: 0.6em;
+}
+
+.start-screen{
+    
+}
+
+.logo{
+    width:256px;
+    height:256px;
+    display: inline-block;
 }
