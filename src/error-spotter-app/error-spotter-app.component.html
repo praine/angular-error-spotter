@@ -5,18 +5,14 @@
     </div>
 
     <div *ngIf="isStarted() && !isCompleted()">
-        <div class="sentence-wrapper mt-5 d-flex justify-content-center">
-            <div *ngIf="getCurrentSentence()">
-                <span *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
-                      class="display-word"
-                      [class.selected]="!isChecked() && isSelected(i)"
-                      [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor && isErrorTypeDeletion())"
-                      [class.correct]="isChecked() && displayWord.replaced"
-                      [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
-                      [class.distractor]="isChecked() && displayWord.distractor"
-                      (click)="selectDisplayWord(i)"
-                >{{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}</span>
-            </div>
+        <div class="sentence-wrapper mt-5">
+            <ec-error-spotter-sentence
+                [currentSentence]="getCurrentSentence()"
+                [selectedIndex]="getSelectedIndex()"
+                [checked]="isChecked()"
+                [deletion]="isErrorTypeDeletion()"
+                (onWordSelect)="selectDisplayWord($event)"
+            ></ec-error-spotter-sentence>
         </div>
 
         <div *ngIf="isChecked()" class="feedback-message">

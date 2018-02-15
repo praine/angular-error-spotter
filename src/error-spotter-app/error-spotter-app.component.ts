@@ -62,6 +62,10 @@ export class ErrorSpotterAppComponent {
         this.selectedIndex = index;
     }
 
+    getSelectedIndex(): number | undefined {
+        return this.selectedIndex;
+    }
+
     hasSelected(): boolean {
         return !_.isUndefined(this.selectedIndex);
     }

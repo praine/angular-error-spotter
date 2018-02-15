@@ -44,8 +44,8 @@ export class ErrorSpotterProgressService {
         let event = {
             correct: correct,
             selectedWord: {
-                wordHeadID: sentenceWord.word.wordHeadID, // undefined for space, need to define how we should store incprrect space events
-                wordRootID: sentenceWord.word.wordHeadID,
+                wordHeadID: sentenceWord.word ? sentenceWord.word.wordHeadID: undefined, // undefined for space, need to define how we should store incprrect space events
+                wordRootID: sentenceWord.word ? sentenceWord.word.wordHeadID: undefined,
                 sequence: sentenceWord.sequence
             }
         }
