@@ -28,8 +28,8 @@ export class SentenceDisplayWord {
     postfix: string;
     visible: boolean;
     replaced: boolean;
+    replacedBy?: string;
     distractor: boolean;
-    distractorDeletion?: boolean;
     sequence: number;
     word?: Word;
 }

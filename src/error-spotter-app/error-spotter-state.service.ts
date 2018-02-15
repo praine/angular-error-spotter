@@ -87,7 +87,6 @@ export class ErrorSpotterStateService {
                     replaced: false,
                     distractor: true,
                     sequence: word.sequence,
-                    distractorDeletion: this.isErrorTypeDeletion(),
                     word: this.currentDistractor.word
                 });
                 sentenceDisplay.displayWords.push({
@@ -122,7 +121,7 @@ export class ErrorSpotterStateService {
             if (this.isErrorTypeSubstitution()) {
                 sentenceDisplay.displayWords.push({
                     prefix: "",
-                    text: " ",
+                    text: "",
                     postfix: "",
                     visible: true,
                     replaced: false,
@@ -135,7 +134,7 @@ export class ErrorSpotterStateService {
                 let visible = word.sequence !== this.currentDistractor.sequence && word.sequence !== this.currentDistractor.sequence - 1;
                 sentenceDisplay.displayWords.push({
                     prefix: "",
-                    text: " ",
+                    text: "",
                     postfix: "",
                     visible: visible,
                     replaced: !visible,

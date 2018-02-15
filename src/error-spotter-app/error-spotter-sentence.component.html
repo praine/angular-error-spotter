@@ -7,7 +7,9 @@
               [class.correct]="isChecked() && displayWord.replaced"
               [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
               (click)="selectDisplayWord(i)"
-        >{{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}
+        >
+            {{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}
+            <span *ngIf="!displayWord.text">&nbsp;</span>
             <rt *ngIf="isChecked() && displayWord.replacedBy" class="distractor">{{displayWord.replacedBy}}</rt>
         </ruby>
     </div>
