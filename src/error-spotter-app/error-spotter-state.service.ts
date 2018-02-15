@@ -79,9 +79,10 @@ export class ErrorSpotterStateService {
                 : _.slice(transcript, wordEndIndex).join("");
 
             if (word.sequence === this.currentDistractor.sequence) {
+                let distractorText = this.currentDistractor.transcript || "";
                 sentenceDisplay.displayWords.push({
                     prefix: prefix,
-                    text: this.currentDistractor.transcript || " ",
+                    text: distractorText,
                     postfix: postfix,
                     visible: true,
                     replaced: false,
@@ -89,18 +90,29 @@ export class ErrorSpotterStateService {
                     sequence: word.sequence,
                     word: this.currentDistractor.word
                 });
+                sentenceDisplay.displayWords.push({
+                    prefix: prefix,
+                    text: text,
+                    postfix: postfix,
+                    visible: false,
+                    replaced: true,
+                    replacedBy: distractorText,
+                    distractor: false,
+                    sequence: word.sequence,
+                    word: word
+                });
+            } else {
+                sentenceDisplay.displayWords.push({
+                    prefix: prefix,
+                    text: text,
+                    postfix: postfix,
+                    visible: true,
+                    replaced: false,
+                    distractor: false,
+                    sequence: word.sequence,
+                    word: word
+                });
             }
-
-            sentenceDisplay.displayWords.push({
-                prefix: prefix,
-                text: text,
-                postfix: postfix,
-                visible: word.sequence !== this.currentDistractor.sequence,
-                replaced: word.sequence == this.currentDistractor.sequence,
-                distractor: false,
-                sequence: word.sequence,
-                word: word
-            });
 
             if (nextBoundaryIndex === -1) {
                 return "";
@@ -110,7 +122,7 @@ export class ErrorSpotterStateService {
             if (this.isErrorTypeSubstitution()) {
                 sentenceDisplay.displayWords.push({
                     prefix: "",
-                    text: " ",
+                    text: "",
                     postfix: "",
                     visible: true,
                     replaced: false,
@@ -123,7 +135,7 @@ export class ErrorSpotterStateService {
                 let visible = word.sequence !== this.currentDistractor.sequence && word.sequence !== this.currentDistractor.sequence - 1;
                 sentenceDisplay.displayWords.push({
                     prefix: "",
-                    text: " ",
+                    text: "",
                     postfix: "",
                     visible: visible,
                     replaced: !visible,

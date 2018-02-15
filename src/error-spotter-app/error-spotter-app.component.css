@@ -1,11 +1,15 @@
 .error-spotter {
     /*font-size: 6vh;*/
-    margin-top:20px;
     width:100%;
 }
 
 .feedback-message {
     font-size: 1em;
+}
+
+.sentence-wrapper {
+    font-size: 2em;
+    min-height: 20vh;
 }
 
 .start-screen{

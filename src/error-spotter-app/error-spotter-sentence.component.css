@@ -8,10 +8,6 @@
     cursor: pointer;
 }
 
-.sentence-wrapper {
-    min-height: 20vh;
-}
-
 .correct {
     background-color: #d4edda;
 }
@@ -23,11 +19,5 @@
 .distractor {
     color: #f00;
     text-decoration: line-through;
-    font-size: 0.9em;
-}
-
-.error-spotter-sentence{
-    margin-top:10px;
-    margin-bottom:10px;
-    font-size:2em;
+    font-size: 0.6em;
 }
