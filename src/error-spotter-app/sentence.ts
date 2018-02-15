@@ -32,3 +32,9 @@ export class SentenceDisplayWord {
     sequence: number;
     word?: Word;
 }
+
+export class ErrorSpotterAnswer {
+    correct: boolean;
+    sentence: SentenceDisplay;
+    selectedIndex: number;
+}

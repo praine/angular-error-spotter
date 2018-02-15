@@ -5,6 +5,11 @@
     </div>
 
     <div *ngIf="isStarted() && !isCompleted()">
+
+        <div>
+            <span class="fa fa-clock-o"></span>{{getSessionTime()}}
+        </div>
+
         <div class="sentence-wrapper mt-5">
             <ec-error-spotter-sentence
                 [currentSentence]="getCurrentSentence()"
@@ -31,7 +36,12 @@
     </div>
 
     <div *ngIf="isCompleted()" class="completion-screen">
-        Complete!
+        <div>
+            {{getTotalCorrectAnswers()}}
+        </div>
+        <div>
+            <span class="fa fa-clock-o"></span>{{getSessionTime()}}
+        </div>
     </div>
 
 </div>

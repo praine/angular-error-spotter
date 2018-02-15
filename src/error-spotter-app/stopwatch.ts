@@ -1,13 +1,13 @@
 export class StopWatch {
     private startDate: Date;
-    private endDate: Date;
+    private endDate?: Date;
     private started: boolean = false;
 
     start(): void {
         if (!this.started) {
             this.startDate = new Date();
-            this.endDate = this.startDate;
             this.started = true;
+            this.endDate = undefined;
         }
     }
 
@@ -18,8 +18,11 @@ export class StopWatch {
     }
 
     getTime(): number {
-        if (this.started && this.startDate && this.endDate) {
-            return this.endDate.getTime() - this.startDate.getTime();
+        if (this.started) {
+            if (this.endDate) {
+                return this.endDate.getTime() - this.startDate.getTime();
+            }
+            return new Date().getTime() - this.startDate.getTime();
         }
 
         return 0;

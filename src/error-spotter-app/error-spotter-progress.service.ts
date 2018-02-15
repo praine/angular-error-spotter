@@ -1,8 +1,11 @@
 import * as _ from "lodash";
+import * as moment from "moment";
 import { Injectable } from "@angular/core";
 import { StopWatch } from "./stopwatch";
-import { SentenceDisplayWord } from "./sentence";
-
+import { ErrorSpotterAnswer, SentenceDisplay, SentenceDisplayWord } from "./sentence";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/interval";
+import { Subscription } from "rxjs/Subscription";
 
 @Injectable()
 export class ErrorSpotterProgressService {
@@ -11,6 +14,9 @@ export class ErrorSpotterProgressService {
     private sessionStopWatch = new StopWatch();
     private answerStopWatch = new StopWatch();
     private activity: any;
+    private answers: ErrorSpotterAnswer[] = [];
+    private sessionTime: string;
+    private subscriptions: Subscription[] = []
 
     constructor() {
     }
@@ -30,36 +36,67 @@ export class ErrorSpotterProgressService {
     startSession(): void {
         this.sessionStopWatch.start();
 
-        if (!this.activity) {
-            return;
-        }
+        this.generateSessionTime();
+        let subscription = Observable.interval(1000)
+            .subscribe(() => {
+                this.generateSessionTime();
+            });
+        this.subscriptions.push(subscription);
 
+        this.sendStartEvent();
+    }
+
+    private generateSessionTime(): void {
+        this.sessionTime = moment(this.sessionStopWatch.getTime()).format("mm:ss");
     }
 
     endSession(): void {
+        this.sessionStopWatch.stop();
         this.sendCompletionEvent();
+        _.map(this.subscriptions, subscription => subscription.unsubscribe());
     }
 
-    answer(correct: boolean, sentenceWord: SentenceDisplayWord): void {
-        let event = {
+    getSessionTime(): string {
+        return this.sessionTime;
+    }
+
+    answer(sentence: SentenceDisplay, sentenceWord: SentenceDisplayWord, selectedIndex: number, correct: boolean): void {
+        this.sendAnswerEvent(sentenceWord, selectedIndex, correct);
+        this.answers.push({
             correct: correct,
-            selectedWord: {
-                wordHeadID: sentenceWord.word ? sentenceWord.word.wordHeadID: undefined, // undefined for space, need to define how we should store incprrect space events
-                wordRootID: sentenceWord.word ? sentenceWord.word.wordHeadID: undefined,
-                sequence: sentenceWord.sequence
-            }
-        }
+            sentence: sentence,
+            selectedIndex: selectedIndex
+        });
+    }
+
+    getAnswers(): ErrorSpotterAnswer[] {
+        return this.answers;
+    }
+
+    getTotalCorrectAnswers(): number {
+        return _.filter(this.answers, answer => answer.correct).length;
     }
 
     sendStartEvent(): void {
-
+        if (!this.activity) {
+            return;
+        }
     }
 
     sendCompletionEvent(): void {
-
+        if (!this.activity) {
+            return;
+        }
     }
 
-    sendAnswerEvent(): void {
-
+    sendAnswerEvent(sentenceWord: SentenceDisplayWord, selectedIndex: number, correct: boolean): void {
+        let event = {
+            correct: correct,
+            selectedWord: {
+                wordHeadID: sentenceWord.word ? sentenceWord.word.wordHeadID : undefined, // undefined for space, need to define how we should store incprrect space events
+                wordRootID: sentenceWord.word ? sentenceWord.word.wordHeadID : undefined,
+                sequence: sentenceWord.sequence
+            }
+        }
     }
 }
