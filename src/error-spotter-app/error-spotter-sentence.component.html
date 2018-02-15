@@ -1,13 +1,14 @@
 <div class="error-spotter-sentence d-flex justify-content-center">
     <div *ngIf="getCurrentSentence()">
-        <span *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
+        <ruby *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
               class="display-word"
               [class.selected]="!isChecked() && isSelected(i)"
-              [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor && displayWord.distractorDeletion)"
+              [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor)"
               [class.correct]="isChecked() && displayWord.replaced"
               [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
-              [class.distractor]="isChecked() && displayWord.distractor"
               (click)="selectDisplayWord(i)"
-        >{{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}</span>
+        >{{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}
+            <rt *ngIf="isChecked() && displayWord.replacedBy" class="distractor">{{displayWord.replacedBy}}</rt>
+        </ruby>
     </div>
 </div>

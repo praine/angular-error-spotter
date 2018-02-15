@@ -90,18 +90,29 @@ export class ErrorSpotterStateService {
                     distractorDeletion: this.isErrorTypeDeletion(),
                     word: this.currentDistractor.word
                 });
+                sentenceDisplay.displayWords.push({
+                    prefix: prefix,
+                    text: text,
+                    postfix: postfix,
+                    visible: false,
+                    replaced: true,
+                    replacedBy: this.currentDistractor.transcript || "",
+                    distractor: false,
+                    sequence: word.sequence,
+                    word: word
+                });
+            } else {
+                sentenceDisplay.displayWords.push({
+                    prefix: prefix,
+                    text: text,
+                    postfix: postfix,
+                    visible: true,
+                    replaced: false,
+                    distractor: false,
+                    sequence: word.sequence,
+                    word: word
+                });
             }
-
-            sentenceDisplay.displayWords.push({
-                prefix: prefix,
-                text: text,
-                postfix: postfix,
-                visible: word.sequence !== this.currentDistractor.sequence,
-                replaced: word.sequence == this.currentDistractor.sequence,
-                distractor: false,
-                sequence: word.sequence,
-                word: word
-            });
 
             if (nextBoundaryIndex === -1) {
                 return "";
