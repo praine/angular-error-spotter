@@ -4,9 +4,9 @@
         <div class="card">
             <img class="card-img-top logo mx-auto" src="assets/logo.png" alt="Error Spotter">
             <div class="card-body">
-                <h5 class="card-title text-center">Error Spotter</h5>
-                <p class="card-text text-center">Improve your recognition of common English mistakes.</p>
-                <div class="btn btn-success btn-block" (click)="startQuiz()" i18n><i class="fa fa-play"></i> Start Quiz</div>
+                <h5 class="card-title text-center" i18n>Error Spotter</h5>
+                <p class="card-text text-center" i18n>Improve your recognition of common English mistakes.</p>
+                <div class="btn btn-success btn-block" (click)="startQuiz()" i18n><i class="fa fa-play"></i> <span i18n>Start Quiz</span></div>
             </div>
         </div>
     </div>
@@ -26,18 +26,18 @@
                 </div>
 
                 <div *ngIf="isChecked()" class="feedback-message">
-                    <div *ngIf="isCorrect()" class="alert alert-success" i18n><img class="fb-img" src='assets/check-mark.png'> Correct</div>
-                    <div *ngIf="!isCorrect()" class="alert alert-danger" i18n><img class="fb-img" src='assets/cross-mark.png'> Incorrect</div>
+                    <div *ngIf="isCorrect()" class="alert alert-success"><img class="fb-img" src='assets/check-mark.png'> <span i18n>Correct</span></div>
+                    <div *ngIf="!isCorrect()" class="alert alert-danger"> i18n><img class="fb-img" src='assets/cross-mark.png'> <span i18n>Incorrect</span></div>
                 </div>
 
                 <div class="d-flex justify-content-center">
                     <div *ngIf="!isChecked()"
                         [class.disabled]="!hasSelected()"
                         (click)="checkAnswer()"
-                        class="btn btn-primary btn-block">Check <i class="fa fa-check"></i></div>
+                        class="btn btn-primary btn-block"><span i18n>Check</span> <i class="fa fa-check"></i></div>
                     <div *ngIf="isChecked()"
                         (click)="nextQuestion()"
-                        class="btn btn-success btn-block">Next <i class="fa fa-arrow-right"></i></div>
+                        class="btn btn-success btn-block"><span i18n>Next</span> <i class="fa fa-arrow-right"></i></div>
                 </div>
 
             </div>
