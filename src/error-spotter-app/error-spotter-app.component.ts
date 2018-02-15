@@ -16,14 +16,25 @@ export class ErrorSpotterAppComponent {
     private checked: boolean = false;
     private correct: boolean = false;
 
+    private sfxIntro: HTMLAudioElement;
+    private sfxCorrect: HTMLAudioElement;
+    private sfxIncorrect: HTMLAudioElement;
+
     constructor(
         private errorSpotterStateService: ErrorSpotterStateService,
         private errorSpotterProgressService: ErrorSpotterProgressService) {
         this.initialize();
+        this.initializeSfx();
     }
 
     initialize(): void {
         this.errorSpotterStateService.setSentences(TEST_SENTENCES);
+    }
+
+    initializeSfx(): void {
+        this.sfxIntro = new Audio("/audio-effects/show_new_flashcard.mp3");
+        this.sfxCorrect = new Audio("/audio-effects/answer_correct.mp3");
+        this.sfxIncorrect = new Audio("/audio-effects/answer_incorrect.mp3");
     }
 
     reset(): void {
@@ -42,6 +53,8 @@ export class ErrorSpotterAppComponent {
     startQuiz(): void {
         this.errorSpotterStateService.startQuiz();
         this.errorSpotterProgressService.startSession();
+
+        this.sfxIntro.play();
     }
 
     getCurrentSentence(): SentenceDisplay | undefined {
@@ -78,6 +91,12 @@ export class ErrorSpotterAppComponent {
             this.selectedIndex,
             this.correct
         );
+
+        if (this.correct) {
+            this.sfxCorrect.play();
+        } else {
+            this.sfxIncorrect.play();
+        }
     }
 
     isChecked(): boolean {
@@ -96,7 +115,10 @@ export class ErrorSpotterAppComponent {
         let nextSentence = this.errorSpotterStateService.generateNextSentence();
         if (!nextSentence) {
             this.errorSpotterProgressService.endSession();
+            return;
         }
+
+        this.sfxIntro.play();
     }
 
     getSessionTime(): string {
