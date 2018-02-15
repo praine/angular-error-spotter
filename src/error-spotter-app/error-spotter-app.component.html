@@ -1,4 +1,4 @@
-<div class="container-fluid error-spotter">
+<div class="container-fluid error-spotter mt-3">
 
     <div *ngIf="!isStarted()" class="start-screen">
         <div class="card">
@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
 
-                <div class="sentence-wrapper">
+                <div class="my-3 sentence-wrapper">
                     <ec-error-spotter-sentence
                         [currentSentence]="getCurrentSentence()"
                         [selectedIndex]="getSelectedIndex()"
@@ -46,10 +46,10 @@
 
     <div *ngIf="isCompleted()" class="completion-screen">
         <div>
-            {{getTotalCorrectAnswers()}}
+            <span class="fa fa-trophy"></span> {{getTotalCorrectAnswers()}}
         </div>
         <div>
-            <span class="fa fa-clock-o"></span>{{getSessionTime()}}
+            <span class="fa fa-clock-o"></span> {{getSessionTime()}}
         </div>
 
         <div class="row" *ngFor="let answer of getAnswers(); let i = index;">
