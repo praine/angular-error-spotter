@@ -66,8 +66,12 @@
             </div>
 
             <div class="col-1">
-                <span *ngIf="answer.correct" class="fa "></span>
-                <span *ngIf="!answer.correct"></span>
+                <span *ngIf="answer.correct">
+                    <img class="fb-img" src='assets/check-mark.png'>
+                </span>
+                <span *ngIf="!answer.correct">
+                    <img class="fb-img" src='assets/cross-mark.png'>
+                </span>
             </div>
         </div>
 
