@@ -1,5 +1,5 @@
-<div class="error-spotter-sentence d-flex justify-content-center">
-    <div *ngIf="getCurrentSentence()">
+<div class="error-spotter-sentence d-flex flex-wrap justify-content-center">
+    <div *ngIf="getCurrentSentence()" class="text-center">
         <ruby *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
               class="display-word"
               [class.selected]="!isChecked() && isSelected(i)"

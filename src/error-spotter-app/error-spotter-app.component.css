@@ -1,6 +1,11 @@
 .error-spotter {
-    /*font-size: 6vh;*/
+    font-size: 3vh;
     width: 100%;
+    position: relative;
+}
+
+:host >>> .btn {
+    font-size: 4vh;
 }
 
 .feedback-message {
@@ -14,6 +19,7 @@
 .sentence-wrapper {
     font-size: 2em;
     position: absolute;
+    z-index: 2;
     bottom: 50%;
     width: 100%;
 }

@@ -1,4 +1,4 @@
-<div class="card h-100 d-flex flex-column justify-content-center">
+<div class="error-spotter card h-100 d-flex flex-column justify-content-center">
 
     <ng-template [ngIf]="!isStarted()">
         <img class="card-img-top logo mx-auto" src="assets/logo.png" alt="Error Spotter">
@@ -13,9 +13,8 @@
         </div>
     </ng-template>
 
-    <div *ngIf="isStarted() && !isCompleted()" class="card-body sentence-block d-flex flex-column justify-content-end h-100">
-
-        <div class="sentence-wrapper">
+    <ng-template [ngIf]="isStarted() && !isCompleted()">
+        <div class="sentence-wrapper p-3">
             <ec-error-spotter-sentence
                     [currentSentence]="getCurrentSentence()"
                     [selectedIndex]="getSelectedIndex()"
@@ -24,27 +23,28 @@
             ></ec-error-spotter-sentence>
         </div>
 
-        <div *ngIf="isChecked()" class="feedback-message">
-            <div *ngIf="isCorrect()" class="alert alert-success"><img class="fb-img" src='assets/check-mark.png'> <span i18n>Correct</span></div>
-            <div *ngIf="!isCorrect()" class="alert alert-danger"><img class="fb-img" src='assets/cross-mark.png'> <span i18n>Incorrect</span></div>
+        <div class="card-body sentence-block d-flex flex-column justify-content-end h-100">
+            <div *ngIf="isChecked()" class="feedback-message">
+                <div *ngIf="isCorrect()" class="alert alert-success"><img class="fb-img" src='assets/check-mark.png'> <span i18n>Correct</span></div>
+                <div *ngIf="!isCorrect()" class="alert alert-danger"><img class="fb-img" src='assets/cross-mark.png'> <span i18n>Incorrect</span></div>
+            </div>
+
+            <div *ngIf="!isChecked()"
+                 [class.disabled]="!hasSelected()"
+                 (click)="checkAnswer()"
+                 class="btn btn-primary btn-block">
+                <span i18n>Check</span>
+                <i class="fa fa-check"></i>
+            </div>
+            <div *ngIf="isChecked()"
+                 (click)="nextQuestion()"
+                 class="btn btn-success btn-block">
+                <span i18n>Next</span>
+                <i class="fa fa-arrow-right"></i>
+            </div>
         </div>
 
-        <div *ngIf="!isChecked()"
-             [class.disabled]="!hasSelected()"
-             (click)="checkAnswer()"
-             class="btn btn-primary btn-block">
-            <span i18n>Check</span>
-            <i class="fa fa-check"></i>
-        </div>
-        <div *ngIf="isChecked()"
-             (click)="nextQuestion()"
-             class="btn btn-success btn-block">
-            <span i18n>Next</span>
-            <i class="fa fa-arrow-right"></i>
-        </div>
-
-    </div>
-
+    </ng-template>
 
     <div *ngIf="isCompleted()" class="card-body completion-screen h-100">
         <div>
