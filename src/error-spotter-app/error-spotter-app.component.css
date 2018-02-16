@@ -1,28 +1,34 @@
 .error-spotter {
     /*font-size: 6vh;*/
-    width:100%;
+    width: 100%;
 }
 
 .feedback-message {
     font-size: 1em;
 }
 
-.sentence-wrapper {
-    font-size: 2em;
+.sentence-block {
     min-height: 20vh;
 }
 
-.start-screen{
-    
+.sentence-wrapper {
+    font-size: 2em;
+    position: absolute;
+    bottom: 50%;
+    width: 100%;
 }
 
-.logo{
-    width:256px;
-    height:256px;
+.start-screen {
+
+}
+
+.logo {
+    width: 256px;
+    height: 256px;
     display: inline-block;
 }
 
-.fb-img{
-    width:32px;
-    height:32px;
+.fb-img {
+    width: 32px;
+    height: 32px;
 }
