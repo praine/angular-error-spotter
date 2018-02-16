@@ -25,8 +25,14 @@
 
         <div class="card-body sentence-block d-flex flex-column justify-content-end h-100">
             <div *ngIf="isChecked()" class="feedback-message">
-                <div *ngIf="isCorrect()" class="alert alert-success"><img class="fb-img" src='assets/check-mark.png'> <span i18n>Correct</span></div>
-                <div *ngIf="!isCorrect()" class="alert alert-danger"><img class="fb-img" src='assets/cross-mark.png'> <span i18n>Incorrect</span></div>
+                <div *ngIf="isCorrect()" class="alert alert-success d-flex align-items-middle justify-content-center">
+                    <i class="fa fa-check-circle"></i>
+                    <span class="ml-1" i18n>Correct</span>
+                </div>
+                <div *ngIf="!isCorrect()" class="alert alert-danger d-flex align-items-middle justify-content-center">
+                    <i class="fa fa-times-circle"></i>
+                    <span class="ml-1" i18n>Incorrect</span>
+                </div>
             </div>
 
             <div *ngIf="!isChecked()"
@@ -69,10 +75,10 @@
 
             <div class="col-1">
             <span *ngIf="answer.correct">
-                <img class="fb-img" src='assets/check-mark.png'>
+                <i class="fa fa-check-circle text-success"></i>
             </span>
-                <span *ngIf="!answer.correct">
-                <img class="fb-img" src='assets/cross-mark.png'>
+            <span *ngIf="!answer.correct">
+                <i class="fa fa-times-circle text-danger"></i>
             </span>
             </div>
         </div>
