@@ -1,9 +1,9 @@
 <div class="error-spotter card h-100 d-flex flex-column justify-content-center">
 
     <ng-template [ngIf]="!isStarted()">
-        <img class="card-img-top logo mx-auto" src="assets/logo.png" alt="Error Spotter">
+        <div class="logo mx-auto"></div>
         <div class="card-body">
-            <h5 class="card-title text-center" i18n>Error Spotter</h5>
+            <h2 class="card-title text-center" i18n>Error Spotter</h2>
             <p class="card-text text-center" i18n>Improve your recognition of common English mistakes.</p>
         </div>
         <div class="mt-auto p-3">
@@ -37,6 +37,8 @@
 
             <div *ngIf="!isChecked()"
                  [class.disabled]="!hasSelected()"
+                 [class.btn-secondary]="!hasSelected()"
+                 [class.btn-primary]="hasSelected()"
                  (click)="checkAnswer()"
                  class="btn btn-primary btn-block">
                 <span i18n>Check</span>
@@ -61,11 +63,11 @@
         </div>
 
         <div class="row" *ngFor="let answer of getAnswers(); let i = index;">
-            <div class="col-1">
+            <div class="col-1 p-0 text-center">
                 {{ i + 1 }}
             </div>
 
-            <div class="col-10">
+            <div class="col p-0 text-center">
                 <ec-error-spotter-sentence
                         [currentSentence]="answer.sentence"
                         [selectedIndex]="answer.selectedIndex"
@@ -73,16 +75,15 @@
                 ></ec-error-spotter-sentence>
             </div>
 
-            <div class="col-1">
-            <span *ngIf="answer.correct">
-                <i class="fa fa-check-circle text-success"></i>
-            </span>
-            <span *ngIf="!answer.correct">
-                <i class="fa fa-times-circle text-danger"></i>
-            </span>
+            <div class="col-1 p-0 text-center">
+                <span *ngIf="answer.correct">
+                    <i class="fa fa-check-circle text-success"></i>
+                </span>
+                <span *ngIf="!answer.correct">
+                    <i class="fa fa-times-circle text-danger"></i>
+                </span>
             </div>
         </div>
-
 
     </div>
 
