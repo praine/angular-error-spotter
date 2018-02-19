@@ -2,13 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Error Spotter</title>
     <link type="text/css" rel="stylesheet" href="https://localhost:3000/dist/vendor.css">
     <script src="https://localhost:3000/dist/polyfill.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container h-100">
-         <ec-error-spotter-app></ec-error-spotter-app>
+    <div class="container-fluid h-100 py-md-3 p-0">
+        <div class="row h-100">
+            <div class="container">
+                <ec-error-spotter-app></ec-error-spotter-app>
+            </div>
+        </div>
     </div>
     <script src="https://localhost:3000/dist/vendor.js"></script>
     <script src="https://localhost:3000/dist/app.js"></script>

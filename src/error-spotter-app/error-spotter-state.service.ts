@@ -66,6 +66,19 @@ export class ErrorSpotterStateService {
             displayWords: []
         };
 
+        // for test-data processing only
+        if (!sentence.words) {
+            sentence.words = _.map(_.trimStart(sentence.transcript).split(" "), (word, index) => {
+                return {
+                    wordHeadID: -1,
+                    wordRootID: -1,
+                    wordInstanceOrthography: word,
+                    sequence: index + 1
+                };
+            })
+        }
+        // end test-data processing
+
         _.reduce(sentence.words, (transcript: string, word: Word) => {
             let wordOrthography = _.toLower(Word.getOrthography(word));
 
@@ -79,7 +92,7 @@ export class ErrorSpotterStateService {
                 : _.slice(transcript, wordEndIndex).join("");
 
             if (word.sequence === this.currentDistractor.sequence) {
-                let distractorText = this.currentDistractor.transcript || "";
+                let distractorText = _.trim(this.currentDistractor.transcript) || "";
                 sentenceDisplay.displayWords.push({
                     prefix: prefix,
                     text: distractorText,

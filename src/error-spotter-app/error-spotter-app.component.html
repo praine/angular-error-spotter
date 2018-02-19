@@ -1,50 +1,60 @@
-<div class="container-fluid error-spotter mt-3">
+<div class="error-spotter card h-100 d-flex flex-column justify-content-center">
 
-    <div *ngIf="!isStarted()" class="start-screen">
-        <div class="card">
-            <img class="card-img-top logo mx-auto" src="assets/logo.png" alt="Error Spotter">
-            <div class="card-body">
-                <h5 class="card-title text-center" i18n>Error Spotter</h5>
-                <p class="card-text text-center" i18n>Improve your recognition of common English mistakes.</p>
-                <div class="btn btn-success btn-block" (click)="startQuiz()" i18n><i class="fa fa-play"></i> <span i18n>Start Quiz</span></div>
+    <ng-template [ngIf]="!isStarted()">
+        <div class="logo mx-auto"></div>
+        <div class="card-body">
+            <h2 class="card-title text-center" i18n>Error Spotter</h2>
+            <p class="card-text text-center" i18n>Improve your recognition of common English mistakes.</p>
+        </div>
+        <div class="mt-auto p-3">
+            <div class="btn btn-success btn-block" (click)="startQuiz()">
+                <i class="fa fa-play"></i> <span i18n>Start Quiz</span>
             </div>
         </div>
-    </div>
+    </ng-template>
 
-    <div *ngIf="isStarted() && !isCompleted()">
-    
-        <div class="card">
-            <div class="card-body">
+    <ng-template [ngIf]="isStarted() && !isCompleted()">
+        <div class="sentence-wrapper p-3">
+            <ec-error-spotter-sentence
+                    [currentSentence]="getCurrentSentence()"
+                    [selectedIndex]="getSelectedIndex()"
+                    [checked]="isChecked()"
+                    (onWordSelect)="selectDisplayWord($event)"
+            ></ec-error-spotter-sentence>
+        </div>
 
-                <div class="my-3 sentence-wrapper">
-                    <ec-error-spotter-sentence
-                        [currentSentence]="getCurrentSentence()"
-                        [selectedIndex]="getSelectedIndex()"
-                        [checked]="isChecked()"
-                        (onWordSelect)="selectDisplayWord($event)"
-                    ></ec-error-spotter-sentence>
+        <div class="card-body sentence-block d-flex flex-column justify-content-end h-100">
+            <div *ngIf="isChecked()" class="feedback-message">
+                <div *ngIf="isCorrect()" class="alert alert-success d-flex align-items-middle justify-content-center">
+                    <i class="fa fa-check-circle"></i>
+                    <span class="ml-1" i18n>Correct</span>
                 </div>
-
-                <div *ngIf="isChecked()" class="feedback-message">
-                    <div *ngIf="isCorrect()" class="alert alert-success"><img class="fb-img" src='assets/check-mark.png'> <span i18n>Correct</span></div>
-                    <div *ngIf="!isCorrect()" class="alert alert-danger"><img class="fb-img" src='assets/cross-mark.png'> <span i18n>Incorrect</span></div>
+                <div *ngIf="!isCorrect()" class="alert alert-danger d-flex align-items-middle justify-content-center">
+                    <i class="fa fa-times-circle"></i>
+                    <span class="ml-1" i18n>Incorrect</span>
                 </div>
+            </div>
 
-                <div class="d-flex justify-content-center">
-                    <div *ngIf="!isChecked()"
-                        [class.disabled]="!hasSelected()"
-                        (click)="checkAnswer()"
-                        class="btn btn-primary btn-block"><span i18n>Check</span> <i class="fa fa-check"></i></div>
-                    <div *ngIf="isChecked()"
-                        (click)="nextQuestion()"
-                        class="btn btn-success btn-block"><span i18n>Next</span> <i class="fa fa-arrow-right"></i></div>
-                </div>
-
+            <div *ngIf="!isChecked()"
+                 [class.disabled]="!hasSelected()"
+                 [class.btn-secondary]="!hasSelected()"
+                 [class.btn-primary]="hasSelected()"
+                 (click)="checkAnswer()"
+                 class="btn btn-primary btn-block">
+                <span i18n>Check</span>
+                <i class="fa fa-check"></i>
+            </div>
+            <div *ngIf="isChecked()"
+                 (click)="nextQuestion()"
+                 class="btn btn-success btn-block">
+                <span i18n>Next</span>
+                <i class="fa fa-arrow-right"></i>
             </div>
         </div>
-    </div>
 
-    <div *ngIf="isCompleted()" class="completion-screen">
+    </ng-template>
+
+    <div *ngIf="isCompleted()" class="card-body completion-screen h-100">
         <div>
             <span class="fa fa-trophy"></span> {{getTotalCorrectAnswers()}}
         </div>
@@ -52,12 +62,12 @@
             <span class="fa fa-clock-o"></span> {{getSessionTime()}}
         </div>
 
-        <div class="row" *ngFor="let answer of getAnswers(); let i = index;">
-            <div class="col-1">
+        <div class="row my-2" *ngFor="let answer of getAnswers(); let i = index;">
+            <div class="col-1 p-0 text-center">
                 {{ i + 1 }}
             </div>
 
-            <div class="col-10">
+            <div class="col p-0 text-center">
                 <ec-error-spotter-sentence
                         [currentSentence]="answer.sentence"
                         [selectedIndex]="answer.selectedIndex"
@@ -65,16 +75,15 @@
                 ></ec-error-spotter-sentence>
             </div>
 
-            <div class="col-1">
+            <div class="col-1 p-0 text-center">
                 <span *ngIf="answer.correct">
-                    <img class="fb-img" src='assets/check-mark.png'>
+                    <i class="fa fa-check-circle text-success"></i>
                 </span>
                 <span *ngIf="!answer.correct">
-                    <img class="fb-img" src='assets/cross-mark.png'>
+                    <i class="fa fa-times-circle text-danger"></i>
                 </span>
             </div>
         </div>
-
 
     </div>
 

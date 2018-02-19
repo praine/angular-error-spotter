@@ -3,7 +3,7 @@ import { Word } from "./word";
 export class Sentence {
     sentenceID: number;
     transcript: string;
-    words: Word[];
+    words?: Word[];
     distractors: SentenceDistractor[];
 }
 
