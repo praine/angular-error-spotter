@@ -263,5 +263,19 @@ export const TEST_SENTENCES = [
                 "sequence": 7
             }
         ]
+    },
+    {
+        "sentenceID": 21,
+        "transcript": "I couldn't find it at first, but did eventually.",
+        "grammarTopic": "verbs",
+        "grammarSubTopic": "transitive verbs",
+        "recommendation": "common transitive verbs",
+        "distractors": [
+            {
+                "transcript": "of",
+                "errorType": "insertion",
+                "sequence": 4
+            }
+        ]
     }
 ];

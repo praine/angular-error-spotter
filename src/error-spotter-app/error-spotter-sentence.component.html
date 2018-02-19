@@ -3,14 +3,15 @@
         <ruby *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
               class="display-word"
               [class.selected]="!isChecked() && isSelected(i)"
-              [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor)"
-              [class.correct]="isChecked() && displayWord.replaced && displayWord.word"
+              [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor && !displayWord.inserted)"
+              [class.distractor]="isChecked() && displayWord.distractor && displayWord.inserted"
+              [class.correct]="isChecked() && ((displayWord.replaced && displayWord.word) || (displayWord.distractor && displayWord.inserted))"
               [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
               (click)="selectDisplayWord(i)"
         >
             {{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}
             <span *ngIf="!displayWord.text">&nbsp;</span>
-            <rt *ngIf="isChecked() && displayWord.replacedBy" class="distractor">{{displayWord.replacedBy}}</rt>
+            <rt *ngIf="isChecked() && displayWord.replacedBy" class="distractor mini">{{displayWord.replacedBy}}</rt>
         </ruby>
     </div>
 </div>

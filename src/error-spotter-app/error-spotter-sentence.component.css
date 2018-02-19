@@ -19,5 +19,8 @@
 .distractor {
     color: #f00;
     text-decoration: line-through;
+}
+
+.distractor.mini {
     font-size: 0.6em;
 }

@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import { Injectable } from "@angular/core";
 import {
-    ERROR_TYPE_DELETION, ERROR_TYPE_SUBSTITUTION, Sentence, SentenceDisplay, SentenceDisplayWord,
+    ERROR_TYPE_DELETION, ERROR_TYPE_INSERTION, ERROR_TYPE_SUBSTITUTION, Sentence, SentenceDisplay, SentenceDisplayWord,
     SentenceDistractor
 } from "./sentence";
 import { Word } from "./word";
@@ -60,6 +60,10 @@ export class ErrorSpotterStateService {
         return this.currentDistractor.errorType === ERROR_TYPE_DELETION;
     }
 
+    isErrorTypeInsertion(): boolean {
+        return this.currentDistractor.errorType === ERROR_TYPE_INSERTION;
+    }
+
     private generateSentenceDisplay(sentence: Sentence): SentenceDisplay {
         let sentenceDisplay = {
             sentenceID: sentence.sentenceID,
@@ -92,6 +96,7 @@ export class ErrorSpotterStateService {
                 : _.slice(transcript, wordEndIndex).join("");
 
             if (word.sequence === this.currentDistractor.sequence) {
+
                 let distractorText = _.trim(this.currentDistractor.transcript) || "";
                 sentenceDisplay.displayWords.push({
                     prefix: prefix,
@@ -99,22 +104,39 @@ export class ErrorSpotterStateService {
                     postfix: postfix,
                     visible: true,
                     replaced: false,
+                    inserted: this.isErrorTypeInsertion(),
                     distractor: true,
                     sequence: word.sequence,
                     word: this.currentDistractor.word
                 });
+
+                // add space after if it's an insertion
+                if (this.isErrorTypeInsertion()) {
+                    sentenceDisplay.displayWords.push({
+                        prefix: "",
+                        text: "",
+                        postfix: "",
+                        visible: true,
+                        replaced: false,
+                        distractor: false,
+                        sequence: word.sequence
+                    });
+                }
+
                 sentenceDisplay.displayWords.push({
                     prefix: prefix,
                     text: text,
                     postfix: postfix,
-                    visible: false,
-                    replaced: true,
-                    replacedBy: distractorText,
+                    visible: this.isErrorTypeInsertion(),
+                    replaced: !this.isErrorTypeInsertion(),
+                    replacedBy: !this.isErrorTypeInsertion() ? distractorText : "",
                     distractor: false,
                     sequence: word.sequence,
                     word: word
                 });
+
             } else {
+
                 sentenceDisplay.displayWords.push({
                     prefix: prefix,
                     text: text,
@@ -125,25 +147,15 @@ export class ErrorSpotterStateService {
                     sequence: word.sequence,
                     word: word
                 });
+
             }
 
+            // end of sentence, stop parsing
             if (nextBoundaryIndex === -1) {
                 return "";
             }
 
             // add space after
-            if (this.isErrorTypeSubstitution()) {
-                sentenceDisplay.displayWords.push({
-                    prefix: "",
-                    text: "",
-                    postfix: "",
-                    visible: true,
-                    replaced: false,
-                    distractor: false,
-                    sequence: word.sequence
-                });
-            }
-
             if (this.isErrorTypeDeletion()) {
                 let visible = word.sequence !== this.currentDistractor.sequence && word.sequence !== this.currentDistractor.sequence - 1;
                 sentenceDisplay.displayWords.push({
@@ -152,6 +164,16 @@ export class ErrorSpotterStateService {
                     postfix: "",
                     visible: visible,
                     replaced: !visible,
+                    distractor: false,
+                    sequence: word.sequence
+                });
+            } else {
+                sentenceDisplay.displayWords.push({
+                    prefix: "",
+                    text: "",
+                    postfix: "",
+                    visible: true,
+                    replaced: false,
                     distractor: false,
                     sequence: word.sequence
                 });

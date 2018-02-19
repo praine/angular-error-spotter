@@ -16,6 +16,7 @@ export class SentenceDistractor {
 
 export const ERROR_TYPE_SUBSTITUTION = "substitution";
 export const ERROR_TYPE_DELETION = "deletion";
+export const ERROR_TYPE_INSERTION = "insertion";
 
 export class SentenceDisplay {
     sentenceID: number;
@@ -29,6 +30,7 @@ export class SentenceDisplayWord {
     visible: boolean;
     replaced: boolean;
     replacedBy?: string;
+    inserted?: boolean;
     distractor: boolean;
     sequence: number;
     word?: Word;
