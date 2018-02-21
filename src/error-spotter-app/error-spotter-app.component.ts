@@ -5,11 +5,10 @@ import { ErrorSpotterProgressService } from "./error-spotter-progress.service";
 import { TEST_SENTENCES } from "../test-data/test-sentences";
 import { ErrorSpotterAnswer, SentenceDisplay } from "./sentence";
 
-
 @Component({
     selector: "ec-error-spotter-app",
     templateUrl: "error-spotter-app.component.html",
-    styleUrls: ["error-spotter-app.component.css"]
+    styleUrls: ["error-spotter-app.component.css", "custom.css"]
 })
 export class ErrorSpotterAppComponent {
     private selectedIndex?: number;
