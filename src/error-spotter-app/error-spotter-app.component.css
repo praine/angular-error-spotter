@@ -21,15 +21,15 @@
 }
 
 .sentence-block {
-    min-height: 5em;
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    width: 100%;
 }
 
 .sentence-wrapper {
-    font-size: 2em;
-    position: absolute;
-    z-index: 2;
-    bottom: 50%;
-    width: 100%;
+    font-size: 1.8em;
+    margin-bottom: 2em;
 }
 
 .card-title {
@@ -40,12 +40,6 @@
     font-size: 1.5em;
 }
 
-.error-spotter-logo {
-    background: url(/assets/logo.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    width: 60%;
-    height: 50%;
-    margin-top: 10%;
+.instructions {
+    font-size: 1.3em;
 }
