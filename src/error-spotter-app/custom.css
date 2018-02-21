@@ -1,0 +1,14 @@
+.btn.green, .ec-btn.green {
+    background: #4caf50;
+    color: #fff;
+}
+
+.error-spotter-logo {
+    background: url(/assets/logo.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    width: 60%;
+    height: 50%;
+    margin-top: 10%;
+}
