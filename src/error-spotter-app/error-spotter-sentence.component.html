@@ -1,17 +1,25 @@
-<div class="error-spotter-sentence d-flex flex-wrap justify-content-center">
-    <div *ngIf="getCurrentSentence()" class="text-center" [class.checked]="isChecked()">
-        <ruby *ngFor="let displayWord of getCurrentSentence().displayWords; let i = index;"
-              class="display-word"
-              [class.selected]="!isChecked() && isSelected(i)"
-              [class.d-none]="(!isChecked() && !displayWord.visible) || (isChecked() && displayWord.distractor && !displayWord.inserted)"
-              [class.distractor]="isChecked() && displayWord.distractor && displayWord.inserted"
-              [class.correct]="isChecked() && ((displayWord.replaced && displayWord.word) || (displayWord.distractor && displayWord.inserted))"
-              [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
-              (click)="selectDisplayWord(i)"
-        >
-            {{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}
-            <span *ngIf="!displayWord.text">&nbsp;</span>
-            <rt *ngIf="isChecked() && displayWord.replacedBy" class="distractor mini">{{displayWord.replacedBy}}</rt>
-        </ruby>
+<div class="error-spotter-sentence">
+    <div *ngIf="getCurrentSentence()"
+         class="d-flex flex-wrap justify-content-center text-center"
+         [class.checked]="isChecked()"
+    >
+        <ng-template ngFor let-displayWord [ngForOf]="getCurrentSentence().displayWords" let-i="index">
+
+            <ruby class="display-word"
+                  *ngIf="(isChecked() || displayWord.visible) && (!isChecked() || !displayWord.distractor || displayWord.inserted)"
+                  [class.selected]="!isChecked() && isSelected(i)"
+                  [class.distractor]="isChecked() && displayWord.distractor && displayWord.inserted"
+                  [class.correct]="isChecked() && ((displayWord.replaced && displayWord.word) || (displayWord.distractor && displayWord.inserted))"
+                  [class.incorrect]="isChecked() && isSelected(i) && !displayWord.distractor"
+                  (click)="selectDisplayWord(i)"
+            >
+                {{displayWord.prefix}}{{displayWord.text}}{{displayWord.postfix}}
+                <span *ngIf="!displayWord.text" class="whitespace">&nbsp;</span>
+                <span class="distractor mini" *ngIf="isChecked() && displayWord.replacedBy">{{displayWord.replacedBy}}</span>
+                <span class="marker" [class.d-none]="isChecked()"></span>
+            </ruby>
+
+        </ng-template>
+
     </div>
 </div>

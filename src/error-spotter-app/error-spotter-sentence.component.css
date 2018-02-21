@@ -1,11 +1,21 @@
+.error-spotter-sentence {
+    counter-reset: visibleItem;
+}
+
 .selected {
     background-color: rgba(0, 0, 255, 0.3) !important;
 }
 
 .display-word {
-    padding: 0.1em;
     background-color: #f5f5f5;
     cursor: pointer;
+    position: relative;
+    padding: 0.2em 0.1em;
+    margin-bottom: 0.3em;
+}
+
+.whitespace {
+    padding: 0 0.2em;
 }
 
 .checked .display-word {
@@ -27,4 +37,31 @@
 
 .distractor.mini {
     font-size: 0.6em;
+    position: absolute;
+    left: 0;
+    top: -1.2em;
+    z-index: 2;
+    width: 100%;
+}
+
+.marker {
+    z-index: 3;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.35em;
+    white-space: nowrap;
+    text-align: center;
+    color: #999;
+}
+
+.marker::before {
+    counter-increment: visibleItem;
+    content: counter(visibleItem);
+}
+
+.selected .marker {
+    color: #fff;
 }

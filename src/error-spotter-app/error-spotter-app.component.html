@@ -1,4 +1,4 @@
-<div class="error-spotter card h-100 d-flex flex-column justify-content-center">
+<div class="error-spotter card h-100 d-flex flex-column justify-content-between">
 
     <ng-template [ngIf]="!isStarted()">
         <div class="error-spotter-logo mx-auto"></div>
@@ -7,7 +7,7 @@
             <p class="card-text text-center" i18n>Improve your recognition of common English mistakes.</p>
         </div>
         <div class="mt-auto p-3">
-            <div class="btn btn-success btn-block" (click)="startQuiz()">
+            <div class="btn green btn-block" (click)="startQuiz()">
                 <span i18n>Start Quiz</span>
                 <i class="fa fa-play"></i>
             </div>
@@ -15,6 +15,11 @@
     </ng-template>
 
     <ng-template [ngIf]="isStarted() && !isCompleted()">
+
+        <div class="instructions text-center mt-5">
+            <span i18n>Click the number to spot the error</span>
+        </div>
+
         <div class="sentence-wrapper p-3">
             <ec-error-spotter-sentence
                     [currentSentence]="getCurrentSentence()"
@@ -24,7 +29,9 @@
             ></ec-error-spotter-sentence>
         </div>
 
-        <div class="card-body sentence-block d-flex flex-column justify-content-end h-100">
+        <div></div>
+
+        <div class="sentence-block p-3">
             <div *ngIf="isChecked()" class="feedback-message">
                 <div *ngIf="isCorrect()" class="alert alert-success d-flex align-items-middle justify-content-center">
                     <i class="fa fa-check-circle mr-2"></i>
@@ -47,7 +54,7 @@
             </div>
             <div *ngIf="isChecked()"
                  (click)="nextQuestion()"
-                 class="btn btn-success btn-block">
+                 class="btn green btn-block">
                 <span i18n>Next</span>
                 <i class="fa fa-arrow-right"></i>
             </div>
